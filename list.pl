@@ -1,40 +1,19 @@
-parent(adam, john).
-parent(eve, john).
-parent(eve, lisa).
-parent(john, anne).
-parent(john, pat).
-parent(pat, jacob).
-parent(carol, jacob).
+prepend(E, L, [E|L]).
+/*prepend(5, [2, 3, 4], X).*/
 
-male(adam).
-male(john).
-male(pat).
-male(jacob).
-female(anne).
-female(eve).
-female(lisa).
-female(carol).
+addElement(E,[],[E]).
+/*addElement(5, [], X).*/
+addElement(E,[H|T],[H|ExtendTail]):- addElement(E,T,ExtendTail).
+/*addElement(5, [2, 3, 4, 6], X).*/
 
-grandparent(GP, GC) :- parent(C, GC), parent(GP, C).
+hasLength([], 0).
+/*hasLength([],X).*/
+hasLength([_|T], X) :- hasLength(T, N), X is N+1 .
+/*hasLength([1,2,3,4],X).*/
 
 
-ancestors(X,Z) :- parent(X,Z). 
-ancestors(X,Z) :- parent(X,Y),ancestors(Y,Z).
-/*ancestors(john, Z).*/
 
-
-head(X, [X|_T]).
-/*head(b, [a, b, c, d, e]).
-**head(a, [a, b, c, d, e]).
-*/
-
-tail(T, [_ | T]).
-/*tail(X , [a,b,c,d,e]).*/
-
-isMember(X, [X | _]).   
-isMember(X, [_ | T]) :- isMember(X, T).
-/*isMember(a, [a,b,c,d,e]).   
-isMember(c, [a,b,c,d,e]).*/
-
-concatenate([], L, L).
-concatenate([H|T], L, [H|ExtendedTail]) :- concatenate(T, L, ExtendedTail).
+remove(E, [E|T], T).
+/*remove(4,[2,3,4],X).*/
+remove(E, [H|T], [H|ReducedTail]):- remove(E,T, ReducedTail).
+/*remove(5, [2, 3, 5, 6], X).*/
